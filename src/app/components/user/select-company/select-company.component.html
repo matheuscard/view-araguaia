@@ -1,0 +1,53 @@
+<div class="grid select-company">
+    <div class="col-6">
+        <div class="box">
+            <div *ngIf="(accountService.currentUser$ | async) as user">
+                <a  (click)="appMain.activeInlineProfile = !appMain.activeInlineProfile">
+                    <img src="https://localhost:7027/resources/images/{{user.imagemURL}}" title="{{user.firstName}}" alt="avatar" style="border-radius: 50px ;width: 44px; height: 44px;">
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="box" style="float: inline-end;">
+                <button style="font-size: 50px; width: 50px; height: 50px;" (click)="logout()" title="Sair" pButton pRipple type="button" icon="pi pi-power-off pi-fw" class="p-button-rounded p-button-danger p-button-text mr-2 mb-2"></button>
+        </div>
+    </div>
+    <div class="col-12 select-company-content">
+        <div class="box">
+            <h1 >Por onde começar?</h1>
+        </div>
+    </div>
+    <div class="col-12 select-company-content">
+        <div class="box" >
+            <div style="width: 100%;" class="widget-customer-carousel">
+
+                <p-carousel [value]="customerCarousel" [numVisible]="4" [numScroll]="1" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
+                    <ng-template let-customer pTemplate="item">
+                        <a style="text-decoration: none;  color: inherit;" routerLink="/">
+                            <div class="card mr-3" >
+                                <div class="customer-item-content" >
+                                    <div class="mb-6">
+                                        <img style="width: 120px; height: 120px;" src="assets/layout/images/dashboard/{{customer.image}}.png" [alt]="customer.image" class="product-image" />
+                                    </div>
+                                    <div>
+                                        <h4>{{customer.user}}</h4>
+                                        <!-- <h5 class="mt-0 mb-3">{{customer.value}}</h5> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </ng-template>
+                </p-carousel>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 select-company-content">
+        <div class="box" >
+            <button pButton pRipple type="button" title="Atenção - Este botão só irá aparecer para determinados usuários." label="Gerenciar Empresas" class="select-company-button p-button-outlined p-button-secondary mr-2 mb-2"></button>
+        </div>
+    </div>
+</div>
+

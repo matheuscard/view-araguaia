@@ -1,0 +1,28 @@
+<div [ngClass]="{'layout-inline-menu': true, 'layout-inline-menu-active':appMain.activeInlineProfile}" *ngIf="!appMain.isMobile() && (appMain.isStatic() || appMain.isSlim() || appMain.isSidebar())">
+    <a  *ngIf="(accountService.currentUser$ | async) as user"  class="layout-inline-menu-action" (click)="appMain.activeInlineProfile = !appMain.activeInlineProfile">
+        <img src="https://localhost:7027/resources/images/{{user.imagemURL}}" alt="avatar" style="width: 44px; height: 44px;">
+        <span class="layout-inline-menu-text">{{user.firstName }}</span>
+        <i class="layout-inline-menu-icon pi pi-angle-up"></i>
+    </a>
+
+    <ul class="layout-inline-menu-action-panel" [@inline]="appMain.activeInlineProfile ? 'visibleAnimated' : 'hiddenAnimated'">
+        <li class="layout-inline-menu-action-item">
+            <a (click)="logout()">
+                <i class="pi pi-power-off pi-fw"></i>
+                <span>Sair</span>
+            </a>
+        </li>
+        <li class="layout-inline-menu-action-item">
+            <a>
+                <i class="pi pi-cog pi-fw"></i>
+                <span>Configurações</span>
+            </a>
+        </li>
+        <li class="layout-inline-menu-action-item">
+            <a routerLink="user/perfil">
+                <i class="pi pi-user pi-fw"></i>
+                <span>Perfil</span>
+            </a>
+        </li>
+    </ul>
+</div>

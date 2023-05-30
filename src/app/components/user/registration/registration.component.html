@@ -1,0 +1,201 @@
+<div class="login-body">
+    <p-toast></p-toast>
+    <div class="login-image">
+        <!-- <img
+            [src]="
+                'assets/layout/images/pages/login-' +
+                (app.colorScheme === 'dark' ? 'ondark' : 'onlight') +
+                '.png'
+            "
+            alt="araguaia"
+        /> -->
+    </div>
+            <!-- <p>{{form.value | json}}</p>
+            <p>{{form.valid | json}}</p> -->
+
+    <form [formGroup]="form" class="login-panel p-fluid" (ngSubmit)="register()">
+        <div class="card flex flex-column">
+            <div class="flex align-items-center mb-6 logo-container">
+                <!--<img [src]="'assets/layout/images/logo-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'"
+                     class="login-logo"/>
+                <img [src]="'assets/layout/images/appname-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'"
+                     class="login-appname"/>-->
+                <h3>Registro</h3>
+            </div>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <input
+                        id="nome"
+                        type="text"
+                        pInputText
+                        placeholder="Nome"
+                        formControlName="firstName"
+                        [ngClass]="{
+                            'ng-dirty ng-invalid':
+                                f.firstName.errors && f.firstName.touched
+                        }"
+                    />
+                    <small
+                        *ngIf="f.firstName.errors?.required && f.firstName.touched"
+                        class="p-error"
+                        >Nome é obrigatório.
+                    </small>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <input
+                        id="sobrenome"
+                        type="text"
+                        pInputText
+                        placeholder="Sobrenome"
+                        formControlName="lastName"
+                        [ngClass]="{
+                            'ng-dirty ng-invalid':
+                                f.lastName.errors && f.lastName.touched
+                        }"
+                    />
+                    <small
+                        *ngIf="
+                            f.lastName.errors?.required && f.lastName.touched
+                        "
+                        class="p-error"
+                        >Sobrenome é obrigatório.</small
+                    >
+                </div>
+                <div class="field col-12">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-at"></i>
+                        <input
+                            id="email"
+                            type="text"
+                            autocomplete="off"
+                            pInputText
+                            placeholder="Email"
+                            formControlName="email"
+                            [ngClass]="{
+                                'ng-dirty ng-invalid':
+                                    f.email.errors && f.email.touched
+                            }"
+                        />
+                    </span>
+                    <small
+                        *ngIf="f.email.errors?.required && f.email.touched"
+                        id="email-help"
+                        class="p-error"
+                        >E-mail é obrigatório.</small
+                    >
+                    <small
+                        *ngIf="f.email.errors?.email && f.email.touched"
+                        id="email-help"
+                        class="p-error"
+                        >Digite um e-mail válido.</small
+                    >
+                </div>
+                <div class="field col-12">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-user"></i>
+                        <input
+                            type="text"
+                            autocomplete="off"
+                            pInputText
+                            placeholder="Usuario"
+                            formControlName="userName"
+                            [ngClass]="{
+                                'ng-dirty ng-invalid':
+                                    f.userName.errors && f.userName.touched
+                            }"
+                        />
+                    </span>
+                    <small
+                        *ngIf="f.userName.errors?.required && f.userName.touched"
+                        id="email-help"
+                        class="p-error"
+                        >Usuario é obrigatório.</small
+                    >
+                </div>
+                <div class="field col-12 md:col-6">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-key"></i>
+                        <input
+                            type="password"
+                            autocomplete="off"
+                            pInputText
+                            placeholder="Digite uma Senha"
+                            formControlName="password"
+                            [ngClass]="{
+                                'ng-dirty ng-invalid':
+                                    f.password.errors && f.password.touched
+                            }"
+                        />
+                    </span>
+                    <small
+                        *ngIf="f.password.errors?.required && f.password.touched"
+                        class="p-error"
+                        >Senha é obrigatório.</small
+                    >
+                    <small
+                        *ngIf="f.password.errors?.minlength && f.password.touched"
+                        class="p-error"
+                        >Senha deve ter no minimo 6 caracteres.</small
+                    >
+                </div>
+                <div class="field col-12 md:col-6">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-key"></i>
+                        <input
+                            type="password"
+                            autocomplete="off"
+                            pInputText
+                            placeholder="Confirmar Senha"
+                            formControlName="confirmPassword"
+                            [ngClass]="{
+                                'ng-dirty ng-invalid':
+                                    f.confirmPassword.errors && f.confirmPassword.touched
+                            }"
+                        />
+                    </span>
+                    <small
+                        *ngIf="f.confirmPassword.errors?.required && f.confirmPassword.touched"
+                        class="p-error"
+                        >Senha é obrigatório.</small
+                    >
+                    <small
+                        *ngIf="f.confirmPassword.errors?.mustMatch && f.confirmPassword.errors?.mustMatch"
+                        class="p-error"
+                        >Senhas nao conferem</small
+                    >
+                </div>
+
+                <div class="field" style="margin-left: 6px">
+                    <p-checkbox
+                        value="true"
+                    ></p-checkbox>
+                    <label style="margin-left: 10px"
+                        >Eu concordo com os
+                        <a href="#">Termos de uso.</a></label
+                    >
+                </div>
+            </div>
+            <div class="button-container">
+                <button
+                    type="submit"
+                    pButton
+                    [disabled]="!form.valid"
+                    label="Registrar"
+                ></button>
+                <span
+                    >Já possui uma conta ?<a [routerLink]="['/user/login']"
+                        >Entre aqui.</a
+                    ></span
+                >
+            </div>
+        </div>
+
+        <div class="login-footer flex align-items-center">
+            <!--<div class="flex align-items-center login-footer-logo-container">
+                <img src="assets/layout/images/logo-gray.png" class="login-footer-logo"/>
+                <img src="assets/layout/images/appname-gray.png" class="login-footer-appname"/>
+            </div>-->
+            <!--<span>Copyright 2021</span>-->
+        </div>
+    </form>
+</div>

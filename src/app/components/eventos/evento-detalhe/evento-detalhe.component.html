@@ -1,0 +1,152 @@
+<div class="grid">
+    <div class="col-12 md:col-6">
+        <!-- <p>{{form.value | json}}</p> -->
+        <p-toast></p-toast>
+        <form class="col card" [formGroup]="form">
+            <h3>Eventos</h3>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12">
+                    <label for="tema">Tema</label>
+                    <input id="tema" type="text" [(ngModel)]="evento.tema" pInputText formControlName="tema" placeholder="Insira o Tema" [ngClass]="{'ng-dirty ng-invalid': f.tema.errors && f.tema.touched }"  />
+                    <small *ngIf="f.tema.errors?.required && f.tema.touched" class="p-error">Tema é obrigatório.</small>
+                    <small *ngIf="f.tema.errors?.minlength && f.tema.touched" class="p-error">Tema deve ter no mínimo 4 caracteres.</small>
+                    <small *ngIf="f.tema.errors?.maxlength && f.tema.touched"  class="p-error">Tema deve ter no máximo 50 caracteres.</small>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="local">Local</label>
+                    <input id="local" type="text" [(ngModel)]="evento.local" pInputText formControlName="local" placeholder="Insira o Local"  aria-describedby="local-help" [ngClass]="{'ng-dirty ng-invalid': f.local.errors && f.local.touched }" />
+                    <small *ngIf="f.local.errors?.required && f.local.touched" class="p-error">Local é obrigatório.</small>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="data-hora">Data e Hora</label>
+                    <p-calendar  dataType="string" dateFormat="dd/mm/yy" [hourFormat]="24"  id="data-hora" [showTime]="true" [showSeconds]="true"  formControlName="dataEvento" appendTo="body"  aria-describedby="data-hora-help" [ngClass]="{'ng-dirty ng-invalid': f.dataEvento.errors && f.dataEvento.touched }"></p-calendar>
+                    <small *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="p-error">Data e Hora são obrigatórios.</small>
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label for="qtd-pessoas">Qtd Pessoas</label>
+                    <input id="qtd-pessoas" type="text"   [(ngModel)]="evento.qtdPessoas" formControlName="qtdPessoas" pInputText  aria-describedby="qtd-pessoas-help"[ngClass]="{'ng-dirty ng-invalid': f.qtdPessoas.errors && f.qtdPessoas.touched }" />
+                    <small *ngIf="f.qtdPessoas.errors?.required && f.qtdPessoas.touched" class="p-error">Quantidade de Pessoas é obrigatório.</small>
+                    <small *ngIf="f.qtdPessoas.errors?.pattern && f.qtdPessoas.touched" class="p-error">Digite apenas números.</small>
+                    <small *ngIf="f.qtdPessoas.errors?.max && f.qtdPessoas.touched" class="p-error">São permitidas no máximo 120000 pessoas por evento.</small>
+                </div>
+                <!-- <div class="field col-12 md:col-2">
+                    <label for="imagem">Imagem</label>
+                    <input id="imagem" type="text"  formControlName="imagemUrl" pInputText  aria-describedby="imagem-help" [ngClass]="{'ng-dirty ng-invalid': f.imagemUrl.errors && f.imagemUrl.touched }"/>
+                    <small *ngIf="f.imagemUrl.errors?.required && f.imagemUrl.touched" class="p-error">Imagem é obrigatório.</small>
+                </div> -->
+                <div class="field col-12 md:col-3">
+                    <label for="telefone">Telefone</label>
+                    <!-- <input id="telefone" type="text" inputMask="(00) 0 0000-0000 || (00) 0000-0000" formControlName="telefone" pInputText  aria-describedby="telefone-help" class="ng-dirty ng-invalid"/> -->
+                    <p-inputMask id="telefone"  type="tex" [(ngModel)]="evento.telefone" formControlName="telefone" mask="99 9 9999 9999" placeholder="(99) 9 9999-9999" [ngClass]="{'ng-dirty ng-invalid': f.telefone.errors && f.telefone.touched }"></p-inputMask>
+                    <small *ngIf="f.telefone.errors?.required && f.telefone.touched" id="telefone-help" class="p-error">Telefone é obrigatório.</small>
+                </div>
+                <div class="field col-12 md:col-5">
+					<label for="email">Email</label>
+                    <span class="p-input-icon-left">
+						<i class="pi pi-at"></i>
+						<input id="email" type="text"  [(ngModel)]="evento.email" pInputText formControlName="email" placeholder="E-mail"  aria-describedby="email-help" [ngClass]="{'ng-dirty ng-invalid': f.email.errors && f.email.touched }"/>
+
+					</span>
+                    <small *ngIf="f.email.errors?.required && f.email.touched" id="email-help" class="p-error">E-mail é obrigatório.</small>
+                    <small *ngIf="f.email.errors?.email && f.email.touched" id="email-help" class="p-error">Digite um e-mail válido.</small>
+				</div>
+            </div>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <button pButton pRipple (click)="salvarEventos()" [disabled]="!form.valid" type="button" label="Salvar" class="p-button-raised p-button-success mr-2 mb-2"></button>
+                </div>
+                <div class="field col-12 md:col-6">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <button pButton pRipple (click)="resetForm()" routerLink="/eventos" type="button" label="Cancelar" class="p-button-raised p-button-danger mr-2 mb-2"></button>
+                </div>
+            </div>
+        </form>
+        <form class="col card" *ngIf="modoEditar" [formGroup]="form">
+            <!--<p>{{form.controls.lotes.value | json}}</p>
+            <p>{{form.controls.lotes.status | json}}</p>-->
+            <h3>Lotes do Eventos</h3>
+            <hr>
+            <p>Clique em Lote para preencher e adicionar novos lotes.</p>
+
+            <hr>
+            <div formArrayName="lotes" *ngFor="let lote of lotes.controls; let i=index" >
+                <div [formGroupName]="i">
+                    <div class="field col-1 ">
+                        <button (click)="removerLote(i)" pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-outlined p-button-danger mr-2 mb-2"></button>
+                    </div>
+                    <div class="p-fluid formgrid grid">
+                        <div class="field col-12 md:col-4">
+                            <label for="nome">Nome</label>
+                            <input id="nome" type="text"  pInputText formControlName="nome" placeholder="Lote" [ngClass]="{'ng-dirty ng-invalid': lotes.get(i+'.nome').errors && lotes.get(i+'.nome').touched}"  />
+                            <small *ngIf="lotes.get(i+'.nome').errors?.required && lotes.get(i+'.nome').touched" class="p-error">Nome é obrigatório.</small>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="quantidade">Quantidade</label>
+                            <input id="quantidade" type="text" formControlName="quantidade" pInputText  aria-describedby="quantidade-help" [ngClass]="{'ng-dirty ng-invalid': lotes.get(i+'.quantidade').errors && lotes.get(i+'.quantidade').touched}" />
+                            <small *ngIf="lotes.get(i+'.quantidade').errors?.required && lotes.get(i+'.quantidade').touched" class="p-error">Quantidade é obrigatório.</small>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="preco">Preço</label>
+                            <!--verificar troca pelo ngx-currency-->
+                            <p-inputNumber mode="currency"  currency="BRL" locale="pt-BR"  [showButtons]="false" [min]="0" formControlName="preco"  pInputText aria-describedby="preco-help" [ngClass]="{'ng-dirty ng-invalid': lotes.get(i+'.preco').errors && lotes.get(i+'.preco').touched}"></p-inputNumber>
+                            <small *ngIf="lotes.get(i+'.preco').errors?.required && lotes.get(i+'.preco').touched" class="p-error">Preco é obrigatório.</small>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="data-inicio">Data Inicio</label>
+                            <p-calendar  dataType="string" dateFormat="dd/mm/yy" [hourFormat]="24"  id="data-inicio" [showTime]="false" [showSeconds]="false"  formControlName="dataInicio" appendTo="body"  aria-describedby="data-inicio-help" [ngClass]="{'ng-dirty ng-invalid': lotes.get(i+'.dataInicio').errors && lotes.get(i+'.dataInicio').touched}"></p-calendar>
+                            <small *ngIf="lotes.get(i+'.dataInicio').errors?.required && lotes.get(i+'.dataInicio').touched" class="p-error">Data Inicio é obrigatório.</small>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="data-fim">Data Fim</label>
+                            <p-calendar  dataType="string" dateFormat="dd/mm/yy" [hourFormat]="24"  id="data-fim" [showTime]="false" [showSeconds]="false"  formControlName="dataFim" appendTo="body"  aria-describedby="data-fim-help" [ngClass]="{'ng-dirty ng-invalid': lotes.get(i+'.dataFim').errors && lotes.get(i+'.dataFim').touched}"></p-calendar>
+                            <small *ngIf="lotes.get(i+'.dataFim').errors?.required && lotes.get(i+'.dataFim').touched" class="p-error">Data Fim é obrigatório.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field col-1 ">
+                <button (click)="adicionarLote()" pButton pRipple label="Lote" icon="pi pi-plus-circle" class="p-button-outlined p-button-primary mr-2 mb-2"></button>
+            </div>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <button pButton pRipple (click)="salvarLotes()" [disabled]="!form.valid" type="button" label="Salvar" class="p-button-raised p-button-success mr-2 mb-2"></button>
+                </div>
+                <div class="field col-12 md:col-6">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <button pButton pRipple (click)="resetForm()" routerLink="/eventos" type="button" label="Cancelar" class="p-button-raised p-button-danger mr-2 mb-2"></button>
+                </div>
+            </div>
+        </form>
+        <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+    </div>
+    <div class="col md:col-6">
+        <div [formGroup]="form" class="card card-evento-view">
+            <div class="card-header">
+                <h5>{{evento.tema}}</h5>
+                <p-menu #menu [popup]="true" ></p-menu>
+                <button pButton type="button" icon="pi pi-upload"
+                        (click)="file.click()"></button>
+            </div>
+            <div class="form-row">
+                <div class="form-group m-0">
+                    <input type="file" #file (change)="onFileChange($event)" class="form-control" placeholder="" style="display: none ">
+                </div>
+            </div>
+
+            <p class="card-subtitle">{{evento.local}}</p>
+            <div class="card">
+                <div class="flex justify-content-center">
+                    <p-image class="image" [src]="imagemURL" alt="Image" width="250" [preview]="true"></p-image>
+                </div>
+            </div>
+            <hr>
+            <h5>Contatos</h5>
+            <p class="card-subtitle">Telefone: {{evento.telefone}}</p>
+            <p class="card-subtitle">E-mail: {{evento.email}}</p>
+            <h6>Capacidade: {{evento.qtdPessoas}}</h6>
+        </div>
+
+    </div>
+</div>

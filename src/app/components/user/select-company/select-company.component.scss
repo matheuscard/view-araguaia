@@ -1,0 +1,27 @@
+.select-company {
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+.select-company-content .box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.select-company-button {
+    display: block;
+    margin: 2em 0 1em 0;
+    font-size: 1.2em;
+    border: 1px solid grey;
+    color: grey;
+    padding: .5em 1.5em;
+    letter-spacing: 2px;
+    cursor: pointer;
+    background-color: transparent;
+}
+.card:hover{
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
