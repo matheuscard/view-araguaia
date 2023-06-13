@@ -1,129 +1,34 @@
-import {RouterModule} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {DashboardDemoComponent} from './components/dashboard/dashboarddemo.component';
-import {FormLayoutDemoComponent} from './demo/view/formlayoutdemo.component';
-import {PanelsDemoComponent} from './demo/view/panelsdemo.component';
-import {OverlaysDemoComponent} from './demo/view/overlaysdemo.component';
-import {MediaDemoComponent} from './demo/view/mediademo.component';
-import {MenusDemoComponent} from './demo/view/menusdemo.component';
-import {MessagesDemoComponent} from './demo/view/messagesdemo.component';
-import {MiscDemoComponent} from './demo/view/miscdemo.component';
-import {EmptyDemoComponent} from './demo/view/emptydemo.component';
-import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
-import {FileDemoComponent} from './demo/view/filedemo.component';
-import {DocumentationComponent} from './demo/view/documentation.component';
-import {AppMainComponent} from './app.main.component';
-import {AppNotfoundComponent} from './pages/app.notfound.component';
-import {AppErrorComponent} from './pages/app.error.component';
-import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
-import {AppLoginComponent} from './pages/app.login.component';
-import {InputDemoComponent} from './demo/view/inputdemo.component';
-import {FloatLabelDemoComponent} from './demo/view/floatlabeldemo.component';
-import {InvalidStateDemoComponent} from './demo/view/invalidstatedemo.component';
-import {ButtonDemoComponent} from './demo/view/buttondemo.component';
-import {TableDemoComponent} from './demo/view/tabledemo.component';
-import {ListDemoComponent} from './demo/view/listdemo.component';
-import {TreeDemoComponent} from './demo/view/treedemo.component';
-import {DisplayComponent} from './utilities/display.component';
-import {ElevationComponent} from './utilities/elevation.component';
-import {FlexboxComponent} from './utilities/flexbox.component';
-import {GridComponent} from './utilities/grid.component';
-import {IconsComponent} from './utilities/icons.component';
-import {WidgetsComponent} from './utilities/widgets.component';
-import {SpacingComponent} from './utilities/spacing.component';
-import {TypographyComponent} from './utilities/typography.component';
-import {TextComponent} from './utilities/text.component';
-import {AppCrudComponent} from './pages/app.crud.component';
-import {AppCalendarComponent} from './pages/app.calendar.component';
-import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
-import {AppInvoiceComponent} from './pages/app.invoice.component';
-import {AppHelpComponent} from './pages/app.help.component';
-import { EventosComponent } from './components/eventos/eventos.component';
-import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
-import { ContatosComponent } from './components/contatos/contatos.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
-import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
-import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
-import { UserComponent } from './components/user/user.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrationComponent } from './components/user/registration/registration.component';
-import { AuthGuard } from './guard/auth.guard';
-import { CostCenterComponent } from './components/cost-center/cost-center.component';
-import { CostCenterListComponent } from './components/cost-center/cost-center-list/cost-center-list/cost-center-list.component';
-import { SelectCompanyComponent } from './components/user/select-company/select-company.component';
+import { NgModule } from '@angular/core';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { AppLayoutComponent } from './layout/app.layout.component';
+
+const routerOptions: ExtraOptions = {
+    anchorScrolling: 'enabled'
+};
+
+const routes: Routes = [
+    {
+        path: '', component: AppLayoutComponent,
+        children: [
+            { path: '', loadChildren: () => import('./araguaia/components/dashboards/dashboards.module').then(m => m.DashboardsModule) },
+            { path: 'uikit', data: { breadcrumb: 'UI Kit' }, loadChildren: () => import('./araguaia/components/uikit/uikit.module').then(m => m.UIkitModule) },
+            { path: 'utilities', data: { breadcrumb: 'Utilities' }, loadChildren: () => import('./araguaia/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
+            { path: 'pages', data: { breadcrumb: 'Pages' }, loadChildren: () => import('./araguaia/components/pages/pages.module').then(m => m.PagesModule) },
+            { path: 'profile', data: { breadcrumb: 'User Management' }, loadChildren: () => import('./araguaia/components/profile/profile.module').then(m => m.ProfileModule) },
+            { path: 'documentation', data: { breadcrumb: 'Documentation' }, loadChildren: () => import('./araguaia/components/documentation/documentation.module').then(m => m.DocumentationModule) },
+            { path: 'blocks', data: { breadcrumb: 'Prime Blocks' }, loadChildren: () => import('./araguaia/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
+            { path: 'ecommerce', data: { breadcrumb: 'E-Commerce' }, loadChildren: () => import('./araguaia/components/ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
+            { path: 'apps', data: { breadcrumb: 'Apps' }, loadChildren: () => import('./araguaia/components/apps/apps.module').then(m => m.AppsModule) }
+        ]
+    },
+    { path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./araguaia/components/auth/auth.module').then(m => m.AuthModule) },
+    { path: 'landing', loadChildren: () => import('./araguaia/components/landing/landing.module').then(m => m.LandingModule) },
+    { path: 'notfound', loadChildren: () => import('./araguaia/components/notfound/notfound.module').then(m => m.NotfoundModule) },
+    { path: '**', redirectTo: '/notfound' }
+];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot([
-            {path: 'eventos', redirectTo: 'eventos/lista'},
-            {path: 'user', redirectTo: 'user/perfil'},
-            {path: 'user', component: UserComponent,
-                    children: [
-                        {path: 'login', component: LoginComponent},
-                        {path: 'registration', component: RegistrationComponent},
-                        {path: 'select-company', component: SelectCompanyComponent}
-                    ]
-            },
-            {
-                path: '', component: AppMainComponent,
-                runGuardsAndResolvers: 'always',
-                canActivate: [AuthGuard],
-                children: [
-                    {path: '', component: DashboardDemoComponent},
-                    {path: 'palestrantes', component: PalestrantesComponent},
-                    {path: 'user', component: UserComponent},
-                    {path: 'user/perfil', component: PerfilComponent},
-                    {path: 'eventos', component: EventosComponent,
-                        children: [
-                            {path: 'detalhe', component: EventoDetalheComponent},
-                            {path: 'detalhe/:id', component: EventoDetalheComponent},
-                            {path: 'lista', component: EventoListaComponent}
-                        ],
-                    },
-                    {path: 'cost-center', component: CostCenterListComponent},
-                    {path: 'contatos', component: ContatosComponent},
-                    {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
-                    {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
-                    {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
-                    {path: 'uikit/input', component: InputDemoComponent},
-                    {path: 'uikit/button', component: ButtonDemoComponent},
-                    {path: 'uikit/table', component: TableDemoComponent},
-                    {path: 'uikit/list', component: ListDemoComponent},
-                    {path: 'uikit/tree', component: TreeDemoComponent},
-                    {path: 'uikit/panel', component: PanelsDemoComponent},
-                    {path: 'uikit/overlay', component: OverlaysDemoComponent},
-                    {path: 'uikit/menu', component: MenusDemoComponent},
-                    {path: 'uikit/media', component: MediaDemoComponent},
-                    {path: 'uikit/message', component: MessagesDemoComponent},
-                    {path: 'uikit/misc', component: MiscDemoComponent},
-                    {path: 'uikit/charts', component: ChartsDemoComponent},
-                    {path: 'uikit/file', component: FileDemoComponent},
-                    {path: 'utilities/display', component: DisplayComponent},
-                    {path: 'utilities/elevation', component: ElevationComponent},
-                    {path: 'utilities/flexbox', component: FlexboxComponent},
-                    {path: 'utilities/grid', component: GridComponent},
-                    {path: 'utilities/icons', component: IconsComponent},
-                    {path: 'utilities/widgets', component: WidgetsComponent},
-                    {path: 'utilities/spacing', component: SpacingComponent},
-                    {path: 'utilities/typography', component: TypographyComponent},
-                    {path: 'utilities/text', component: TextComponent},
-                    {path: 'pages/crud', component: AppCrudComponent},
-                    {path: 'pages/calendar', component: AppCalendarComponent},
-                    {path: 'pages/timeline', component: AppTimelineDemoComponent},
-                    {path: 'pages/invoice', component: AppInvoiceComponent},
-                    {path: 'pages/help', component: AppHelpComponent},
-                    {path: 'pages/empty', component: EmptyDemoComponent},
-                    {path: 'documentation', component: DocumentationComponent}
-                ]
-            },
-            {path: 'error', component: AppErrorComponent},
-            {path: 'access', component: AppAccessdeniedComponent},
-            {path: 'notfound', component: AppNotfoundComponent},
-            {path: 'login', component: AppLoginComponent},
-            {path: '**', redirectTo: '/notfound'},
-        ], {scrollPositionRestoration: 'enabled'})
-    ],
+    imports: [RouterModule.forRoot(routes, routerOptions)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule { }

@@ -1,5 +1,44 @@
 # Changelog
 
+## 15.1.0
+
+**Implemented New Features and Enhancements:**
+- Introduced next-gen implementation based on LayoutService
+- Updated UI kit demos
+- Added Apps
+- Added E-commerce demos
+- New authentication pages
+- New Drawer menu
+- New Reveal menu
+
+## 15.0.0
+**Migration Guide**
+- Upgrade to PrimeNG 15
+- Upgrade to Angular 15
+
+**Implemented New Features and Enhancements:**
+- Update to PrimeNG 15
+- Update to Angular 15
+
+## 14.0.1
+**Fixed bugs:**
+- Fixed a bug causes menu malfunction in menu service.
+
+## 14.0.0
+**Migration Guide**
+- Upgrade to PrimeNG 14
+- Upgrade to Angular 14
+  
+**Implemented New Features and Enhancements:**
+- Update to PrimeNG 14
+- Update to Angular 14
+- Add primary color variable to theme variables.
+
+## 13.1.0
+**Migration Guide**
+- Upgrade to PrimeFlex v3.
+- Upgrade to Angular 13 and PrimeNG 13.1.0
+
 ## 13.0.0
 **Migration Guide**
 - Update your project to Angular 13.

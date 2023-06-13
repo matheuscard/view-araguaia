@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "atlantis": {
+        "atlantis-ng": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -20,41 +20,32 @@
                         "outputPath": "dist/atlantis-ng",
                         "index": "src/index.html",
                         "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "polyfills": [
+                            "zone.js"
+                        ],
                         "tsConfig": "tsconfig.app.json",
-                        "aot": true,
+                        "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/upload.php"
+                            "src/favicon.ico", 
+                            "src/assets"
                         ],
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "scripts": [
-                            "node_modules/prismjs/prism.js",
-                            "node_modules/prismjs/components/prism-typescript.js"
-                        ],
-                        "allowedCommonJsDependencies": ["@fullcalendar/daygrid","@fullcalendar/timegrid","@fullcalendar/interaction","chart.js"]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "3mb",
+                                    "maximumWarning": "1mb",
                                     "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb",
-                                    "maximumError": "10kb"
-                                }
-                            ],
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
                                 }
                             ],
                             "outputHashing": "all"
@@ -72,15 +63,12 @@
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "atlantis:build"
-                    },
                     "configurations": {
                         "production": {
-                            "browserTarget": "atlantis:build:production"
+                            "browserTarget": "atlantis-ng:build:production"
                         },
                         "development": {
-                            "browserTarget": "atlantis:build:development"
+                            "browserTarget": "atlantis-ng:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -88,41 +76,33 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "atlantis:build"
+                        "browserTarget": "atlantis-ng:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "polyfills": [
+                            "zone.js",
+                            "zone.js/testing"
+                        ],
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
-                        "scripts": [],
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "src/favicon.ico", 
+                            "src/assets"
+                        ],
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/upload.php"
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "tsconfig.app.json",
-                            "tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
+                        "scripts": []
                     }
                 }
             }
         }
     },
-    "defaultProject": "atlantis"
+    "cli": {
+      "analytics": "059ded87-3f6e-4ace-897b-0417efe602f5"
+    }
 }
