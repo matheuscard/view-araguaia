@@ -15,7 +15,9 @@ export const environment = {
   code_challenge:'T-xl9hy1F5pmy8-bcYIrMNac_TjhwaiVC_o-0Eb0IGo',
   code_verifier: 'dbBjwS3cYljGnwoSul5pDIKGp9HWgunMXu7zWrbughs',
   token_url: 'http://127.0.0.1:9000/oauth2/token',
-  grant_type: 'authorization_code'
+  grant_type: 'authorization_code',
+  resource_user_url: 'http://127.0.0.1:8081/',
+  logout_url: 'http://127.0.0.1:9000/logout'
   // apiURL:'https://localhost:7286/',
   // apiAuth:'https://localhost:7027/',
   // apiCashier: 'https://localhost:7176/'

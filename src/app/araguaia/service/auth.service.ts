@@ -1,13 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, map, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/account/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  currentUserUrl = environment.resource_user_url + 'users/current';
+  private currentUserSource = new ReplaySubject<User>(1);
+  public currentUser$ = this.currentUserSource.asObservable();
   token_url = environment.token_url;
 
   constructor(private httpClient: HttpClient) {
@@ -32,4 +35,21 @@ export class AuthService {
     return this.httpClient.post<any>(this.token_url, body, httpOptions);
 
    }
+   public getCurrentUser(): Observable<any>{
+    const access_token = localStorage.getItem('access_token')!;
+    const refresh_token = localStorage.getItem('refresh_token')!;
+    const headers_object = new HttpHeaders({
+      'Accept': '*/*',
+      'Authorization': 'Bearer '+access_token
+    });
+    const httpOptions = { headers: headers_object};
+    return this.httpClient.get<any>(this.currentUserUrl,httpOptions);
+   
+
+   }
+
+   public setCurrentUser(user: any): void{
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
+  }
 }

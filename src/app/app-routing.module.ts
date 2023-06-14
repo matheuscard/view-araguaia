@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { AuthGuard } from './araguaia/guard/auth.guard';
 
 const routerOptions: ExtraOptions = {
     anchorScrolling: 'enabled'
@@ -9,6 +10,8 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
     {
         path: '', component: AppLayoutComponent,
+        runGuardsAndResolvers: 'always',
+        canActivate: [AuthGuard],
         children: [
             { path: '', loadChildren: () => import('./araguaia/components/dashboards/dashboards.module').then(m => m.DashboardsModule) },
             { path: 'uikit', data: { breadcrumb: 'UI Kit' }, loadChildren: () => import('./araguaia/components/uikit/uikit.module').then(m => m.UIkitModule) },
@@ -24,6 +27,7 @@ const routes: Routes = [
     { path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./araguaia/components/auth/auth.module').then(m => m.AuthModule) },
     { path: 'landing', loadChildren: () => import('./araguaia/components/landing/landing.module').then(m => m.LandingModule) },
     { path: 'notfound', loadChildren: () => import('./araguaia/components/notfound/notfound.module').then(m => m.NotfoundModule) },
+    { path: 'access', loadChildren: () => import('./araguaia/components/auth/accessdenied/accessdenied.module').then(m => m.AccessdeniedModule) },
     { path: '**', redirectTo: '/notfound' }
 ];
 
