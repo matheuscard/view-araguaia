@@ -28,8 +28,19 @@ export class AuthorizedComponent implements OnInit{
       
 
     })
-    
-    console.log(btoa('teste:teste'))
+    this.authService.getCurrentUser().subscribe((data:User)=>{
+      const access_token = localStorage.getItem('access_token')!;
+      const refresh_token = localStorage.getItem('refresh_token')!;
+      const login = data.login;
+      if(login){
+        let u = new User(login,access_token,refresh_token)
+        this.authService.setCurrentUser(u);
+        this.router.navigateByUrl('');
+      }
+    },
+    err=>{
+      console.log(err);
+    })
   }
   getToken():void{
     this.authService.getToken(this.code).subscribe(

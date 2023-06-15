@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
         { path: 'verification', loadChildren: () => import('./verification/verification.module').then(m => m.VerificationModule) },
         { path: 'lockscreen', loadChildren: () => import('./lockscreen/lockscreen.module').then(m => m.LockScreenModule) },
         { path: 'authorized', loadChildren: () => import('./authorized/authorized.module').then(m => m.AuthorizedModule) },
+        { path: 'logout', loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule) },
         { path: '**', redirectTo: '/notfound' }
     ])],
     exports: [RouterModule]

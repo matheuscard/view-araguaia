@@ -23,9 +23,7 @@ export class AppTopbarComponent {
         }, 100);
     }
     public logout():void{
-        this.tokenService.clear();
         location.href = this.logout_url;
-
     }
     deactivateSearch() {
         this.searchActive = false;
