@@ -23,6 +23,22 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Cadastros',
+                icon: 'pi pi-home',
+                items: [
+                    {
+                        label: 'Financeiro',
+                        icon: 'pi pi-fw pi-money-bill',
+                        items:[{
+                            label: 'Centro de Custo',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: ['/apps/blog/list']
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 label: 'Apps',
                 icon: 'pi pi-th-large',
                 items: [

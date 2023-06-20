@@ -7,10 +7,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { JwtInterceptor } from './araguaia/interceptors/jwt.interceptor';
 import { MessageService } from 'primeng/api';
 import { AuthService } from './araguaia/service/auth.service';
+import { CostcenterComponent } from './araguaia/components/types/costcenter/costcenter.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        CostcenterComponent,
     ],
     imports: [
         AppRoutingModule,

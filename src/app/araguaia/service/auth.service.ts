@@ -35,6 +35,20 @@ export class AuthService {
     return this.httpClient.post<any>(this.token_url, body, httpOptions);
 
    }
+   public getAcessTokenByRefreshToken(refreshtoken:string):any{
+    const basic_auth = 'Basic '+ btoa('teste:teste');
+    const headers_object = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': '*/*',
+      'Authorization': basic_auth
+    });
+    let body = new URLSearchParams();
+    body.set('grant_type', environment.grant_type_refresh_token);
+    body.set('refresh_token', refreshtoken);
+    const httpOptions = { headers: headers_object};
+    return this.httpClient.post<any>(this.token_url, body, httpOptions);
+
+   }
    public getCurrentUser(): Observable<any>{
     const access_token = localStorage.getItem('access_token')!;
     const headers_object = new HttpHeaders({

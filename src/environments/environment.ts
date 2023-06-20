@@ -16,6 +16,7 @@ export const environment = {
   code_verifier: 'dbBjwS3cYljGnwoSul5pDIKGp9HWgunMXu7zWrbughs',
   token_url: 'http://127.0.0.1:9000/oauth2/token',
   grant_type: 'authorization_code',
+  grant_type_refresh_token: 'refresh_token',
   resource_user_url: 'http://127.0.0.1:8081/',
   logout_url: 'http://127.0.0.1:9000/logout'
   // apiURL:'https://localhost:7286/',
